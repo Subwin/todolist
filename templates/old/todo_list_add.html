@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>todo list add</title>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
+<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span8">
+			<form action="/todo/add/{{user.username}}" method="POST">
+				<fieldset>
+					<legend><textarea class="form-control" name="content" placeholder="写点东西" style="margin: 0px 0px 10px; width: 610px; height: 126px;"></textarea></legend>
+					<button class="btn" type="submit">发表新微博</button>
+				</fieldset>
+			</form>
+			
+		</div>
+		<div class="span4">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						您的用户名：{{ user.username }}
+					</h3>
+				</div>
+				<div class="panel-body">
+					关注用户：0
+				</div>
+				<div class="panel-footer">
+					粉丝：0
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span8">
+    <h3>所有微博</h3>
+    	{% for t in all_todo_list %}
+			<hr>
+    		<p>
+        		<a href="/timeline/{{ t.user.username }}">{{ t.user.username }}</a>
+        		{{ t.content }}
+        		{{ t.created_time }}
+			</p>
+   			 <a href="/timeline/comments/{{ t.id }}">评论({{ t.comments|length }})</a>
+ 		{% endfor %}
+		</div>
+		<div class="span4">
+			<h3>
+				您的微博
+			</h3>
+			{% for t in todo_list %}
+			<hr>
+        	<p>
+            	{{ t.content }}
+            	<a href="/todo/update/{{t.id}}">编辑</a>
+            	<a href="/todo/delete/{{t.id}}">删除</a>
+        	</p>
+			<a href="/timeline/comments/{{ t.id }}">评论({{ t.comments|length }})</a>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+</body>
+</html>

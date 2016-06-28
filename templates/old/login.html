@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>login</title>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
+<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<h3 class="text-center">
+				欢迎至此
+			</h3>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="col-xs-3 span3">
+		</div>
+		<div class="col-xs-3 span3">
+			<form action="/login" method="POST">
+				<fieldset>
+					<legend>登录</legend> <label><strong>用户名</strong></label>
+					<p>
+						<input name="username" placeholder="输入用户名" type="text" />
+					</p>
+					<p>
+						<strong>密码</strong><br /><input name="password" placeholder="输入密码" type="password" />
+					</p>
+					<p>
+						<br /> <button class="btn" type="submit">提交</button>
+					</p>
+				</fieldset>
+			</form>
+		</div>
+		<div class="col-xs-3 span3">
+			<form action="/register" method="POST">
+				<fieldset>
+					<legend>注册</legend> <label><strong>用户名</strong></label><input name="username" placeholder="输入用户名" type="text" />
+					<p>
+						<strong>密码</strong>
+					</p>
+					<p>
+						<input name="password" placeholder="输入密码" type="password" />
+					</p><br /> <button class="btn" type="submit">提交</button>
+				</fieldset>
+			</form>
+			{% for m in get_flashed_messages() %}
+			<div class="alert alert-warning">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				{{ m }}
+			</div>
+    		{% endfor %}
+		</div>
+		<div class="col-xs-3 span3">
+		</div>
+	</div>
+</div>
+</body>
+</html>

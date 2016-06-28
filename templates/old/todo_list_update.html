@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>todo list update</title>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/jquery-ui"></script>
+<link href="http://www.francescomalagrino.com/BootstrapPageGenerator/3/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="http://www.francescomalagrino.com/BootstrapPageGenerator/3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span8">
+			<form action="/todo/update/{{ todo.id }}" method="POST">
+				<fieldset>
+					<legend><textarea class="form-control" name="content" placeholder="{{ todo.content }}" style="margin: 0px 0px 10px; width: 610px; height: 126px;"></textarea></legend>
+					<button class="btn" type="submit">修改</button>
+				</fieldset>
+			</form>
+		</div>
+		<div class="span4">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						您的用户名：{{ user.username }}
+					</h3>
+				</div>
+				<div class="panel-body">
+					关注用户：0
+				</div>
+				<div class="panel-footer">
+					粉丝：0
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

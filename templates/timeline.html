@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>timeline</title>
+</head>
+<body>
+    <P>
+        您的用户名：{{ user.username }}
+        关注用户：0
+        粉丝：0
+    </P>
+    {% for t in todolists %}
+    <p>
+        <a href="/timeline/{{ t.user.username }}">{{ t.user.username }}</a>：
+        {{ t.content }}
+        {{ t.created_time }}
+    </p>
+    <a href="/timeline/comments/{{ t.id }}">评论({{ t.comments|length }})</a>
+    {% endfor %}
+    <hr>
+    <a href="/todo/add/{{ user.username }}">返回首页</a>
+</body>
+</html>

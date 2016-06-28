@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin view</title>
+</head>
+<body>
+    {% for u in users %}
+    <p>
+        {{ u.id }}
+        <a href="/todo/add/{{ u.username }}">{{ u.username }}</a>
+        {{ u.password }}
+    </p>
+    {% endfor %}
+</body>
+</html>

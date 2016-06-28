@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todo list add</title>
+</head>
+<body>
+    <P>
+        您的用户名：{{ user.username }}
+        关注用户：0
+        粉丝：0
+    </P>
+    <form action="/todo/add/{{user.username}}" method="POST">
+        <textarea name="content" placeholder="写点东西"></textarea>
+        <br>
+        <button type="submit">添加todo</button>
+    </form>
+    <h3>您的微博</h3>
+    {% for t in todo_list %}
+        <p>
+            {{ t.content }}
+            <a href="/todo/update/{{t.id}}">编辑</a>
+            <a href="/todo/delete/{{t.id}}">删除</a>
+        </p>
+        <a href="/timeline/comments/{{ t.id }}">评论({{ t.comments|length }})</a>
+    {% endfor %}
+    <hr>
+    <h3>所有微博</h3>
+    {% for t in all_todo_list %}
+    <p>
+        <br>
+        <a href="/timeline/{{ t.user.username }}">{{ t.user.username }}</a>
+        {{ t.content }}
+        {{ t.created_time }}
+    </p>
+    <a href="/timeline/comments/{{ t.id }}">评论({{ t.comments|length }})</a>
+    <!--{{ t.comments|length }} 就是求对象的长度，等价于python中len(t.comments)-->
+    {% endfor %}
+</body>
+</html>

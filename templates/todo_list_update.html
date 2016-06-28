@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todo list update</title>
+</head>
+<body>
+    <P>
+        您的用户名：{{ user.username }}
+        关注用户：0
+        粉丝：0
+    </P>
+    <form action="/todo/update/{{ todo.id }}" method="POST">
+        <input name="content" placeholder="{{ todo.content }}"/>
+        <button type="submit">修改</button>
+    </form>
+</body>
+</html>

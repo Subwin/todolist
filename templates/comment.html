@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comment</title>
+</head>
+<body>
+    <P>
+        您的用户名：{{ user.username }}
+        关注用户：0
+        粉丝：0
+    </P>
+    <h3>微博内容</h3>
+    {{ todo.content }}
+    <hr>
+    <form action="/timeline/comments/{{ todo.id }}" method="POST">
+        <textarea name="content" placeholder="评论内容"></textarea>
+        <br>
+        <button type="submit">发表评论</button>
+    </form>
+    <h3>用户评论：</h3>
+    {% for c in comments %}
+        <P>
+            <a href="/timeline/{{ c.user.username }}">{{ c.user.username }}</a>
+            {{ c.content }}
+            {{ c.created_time }}
+        </P>
+    {% endfor %}
+    <hr>
+    <a href="/timeline/{{ todo.user.username }}">返回上页</a>
+</body>
+</html>
