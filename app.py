@@ -88,24 +88,29 @@ def timeline_view(username):
 
 @app.route('/register', methods=['POST'])
 def register():
-    form = request.form
+    form = request.get_json()
     log('debug form = ', form)
+    status = {
+        'result':'',
+        'url':'',
+    }
     u = User(form)
     if u.regist_validator():
         u.save()
-        # print('用户注册成功')
-        # print('debug u = ', u)
-        # print('debug u.username = ', u.username)
-        # print('debug u.id = ', u.id)
         # save了之后才进入数据库，才有id
         session['user_id'] = u.id
         log('debug session[user_id] =', session['user_id'])
         log('debug u.id =', u.id)
-        return redirect(url_for('todo_add_view', username=u.username))
+        status['result'] = '注册成功'
+        status['url'] = url_for('todo_add_view', username=u.username)
+        r = json.dumps(status, ensure_ascii=False)
+        return r
     else:
-        flash('注册失败')
+        # flash('注册失败')
+        status['result'] = '注册失败'
         log('注册失败', form)
-        return redirect(url_for('login_view'))
+        r = json.dumps(status, ensure_ascii=False)
+        return r
 
 
 @app.route('/todo/admin')

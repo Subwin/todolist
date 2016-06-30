@@ -7,8 +7,10 @@
     <script>
         $(document).ready(function(){
             console.log('ready');
-            var button = $('#id-login-submit');
-            button.on('click', function(){
+            var login_button = $('#id-login-submit');
+            var regist_button = $('#id-regist-submit');
+
+            login_button.on('click', function(){
               console.log('click button');
               var username = $('#id-login-username').val();
               var password = $('#id-login-password').val();
@@ -30,7 +32,7 @@
                   console.log(typeof data)
                   var r = JSON.parse(data);
                   console.log(typeof r, r['result'], r);
-                  $('#id-p-info').text(r.result);
+                  $('#id-login-info').text(r.result);
                   if (r.url != ''){
                     console.log('r.url', r.url)
                     window.location.href = r.url
@@ -39,7 +41,39 @@
               };
               $.ajax(request);
             });
-        });
+
+            regist_button.on('click', function(){
+              console.log('click button');
+              var username = $('#id-regist-username').val();
+              var password = $('#id-regist-password').val();
+              console.log('user', username, password);
+              var account = {
+                username: username,
+                password: password
+              };
+              // JSON.stringify 可以把一个 object 转换为字符串
+              var postData = JSON.stringify(account);
+              console.log('JSON格式的数据是', postData)
+              // get or post
+              var request = {
+                url: '/register',
+                type: 'post',
+                contentType: 'application/json',
+                data: postData,
+                success: function(data){
+                  console.log(typeof data);
+                  var r = JSON.parse(data);
+                  console.log(typeof r, r['result'], r);
+                  $('#id-regist-info').text(r.result);
+                  if (r.url != ''){
+                    console.log('r.url', r.url);
+                    window.location.href = r.url;
+                  };
+                }
+              };
+              $.ajax(request);
+           });
+        })
     </script>
 </head>
 <body>
@@ -53,7 +87,7 @@
         <input id='id-login-password' placeholder="输入密码"/>
         <br>
         <button id='id-login-submit'>登录</button>
-        <p id='id-p-info'>
+        <p id='id-login-info'>
         </p>
     <!-- </form> -->
     <hr>
@@ -64,6 +98,8 @@
         <input id='id-regist-password' placeholder="输入密码"/>
         <br>
         <button id='id-regist-submit'>注册</button>
+        <p id='id-regist-info'>
+        </p>
     <!-- </form> -->
 </body>
 </html>
