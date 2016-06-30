@@ -3,27 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    <script src="http://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            console.log('ready');
+            var button = $('#id-login-submit');
+            button.on('click', function(){
+              console.log('click button');
+              var username = $('#id-login-username').val();
+              var password = $('#id-login-password').val();
+              console.log('user', username, password);
+              var account = {
+                username: username,
+                password: password
+              };
+              // JSON.stringify 可以把一个 object 转换为字符串
+              var postData = JSON.stringify(account);
+              console.log('JSON格式的数据是', postData)
+              // get or post
+              var request = {
+                url: '/login',
+                type: 'post',
+                contentType: 'application/json',
+                data: postData,
+                success: function(data){
+                  console.log(typeof data)
+                  var r = JSON.parse(data);
+                  console.log(typeof r, r['result'], r);
+                  $('#id-p-info').text(r.result);
+                  if (r.url != ''){
+                    console.log('r.url', r.url)
+                    window.location.href = r.url
+                  }
+                }
+              };
+              $.ajax(request);
+            });
+        });
+    </script>
 </head>
 <body>
-    {% for m in get_flashed_messages() %}
+    <!-- {% for m in get_flashed_messages() %}
     <h4>{{ m }}</h4>
-    {% endfor %}
+    {% endfor %} -->
     <h1>登录</h1>
-    <form action="/login" method="POST">
-        <input name="username" placeholder="输入用户名"/>
+    <!-- <form action="/login" method="POST"> -->
+        <input id='id-login-username' placeholder="输入用户名"/>
         <br>
-        <input name="password" placeholder="输入密码"/>
+        <input id='id-login-password' placeholder="输入密码"/>
         <br>
-        <button type="submit">登录</button>
-    </form>
+        <button id='id-login-submit'>登录</button>
+        <p id='id-p-info'>
+        </p>
+    <!-- </form> -->
     <hr>
     <h1>注册</h1>
-    <form action="/register" method="POST">
-        <input name="username" placeholder="输入用户名"/>
+    <!-- <form action="/register" method="POST"> -->
+        <input id='id-regist-username' placeholder="输入用户名"/>
         <br>
-        <input name="password" placeholder="输入密码"/>
+        <input id='id-regist-password' placeholder="输入密码"/>
         <br>
-        <button type="submit">注册</button>
-    </form>
+        <button id='id-regist-submit'>注册</button>
+    <!-- </form> -->
 </body>
 </html>

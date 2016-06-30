@@ -7,6 +7,8 @@ from flask import abort
 from flask import session
 from flask import flash
 
+import json
+
 from models import TodoList
 from models import User
 from models import Comment
@@ -38,27 +40,43 @@ def login_view():
 @app.route('/login', methods=['POST'])
 def login():
     # request.get_data()可以得到原始的请求语句
-    form = request.form
+    form = request.get_json()
+    print('debug form', form)
     login_u = User(form)
     data_u = User.query.filter_by(username=login_u.username).first()
+    status = {
+        'result': '',
+        'url':'',
+    }
     if data_u is None:
-        flash('登录失败')
+        # flash('登录失败')
+        status['result'] = '登录失败'
+        r = json.dumps(status, ensure_ascii=False)
         log('用户登录失败', login_u)
-        return redirect(url_for('login_view'))
+        return r
 
     if data_u.login_validator(login_u):
         log('用户登录成功')
         session['user_id'] = data_u.id
         if data_u.is_admin():
-            r = redirect(url_for('admin_view'))
+            # r = redirect(url_for('admin_view'))
+            # return r
+            status['result'] = '登陆成功'
+            status['url'] = url_for('admin_view')
+            log('status["url"]', status['url'])
+            r = json.dumps(status, ensure_ascii=False)
             return r
         else:
-            r = redirect(url_for('todo_add_view', username=data_u.username))
+            status['result'] = '登陆成功'
+            status['url'] = url_for('todo_add_view', username=data_u.username)
+            log('status["url"]', status['url'])
+            r = json.dumps(status, ensure_ascii=False)
             return r
     else:
-        flash('登录失败')
+        status['result'] = '登录失败'
+        r = json.dumps(status, ensure_ascii=False)
         log('用户登录失败', login_u)
-        return redirect(url_for('login_view'))
+        return r
 
 
 @app.route('/timeline/<username>')
@@ -176,11 +194,11 @@ def comment(todo_id):
 
 
 if __name__ == '__main__':
-    host, port = '0.0.0.0', 19000
-    args = {
-        'host': host,
-        'port': port,
-        'debug': True,
-    }
-    app.run(**args)
-    # app.run(debug=True)
+    # host, port = '0.0.0.0', 19000
+    # args = {
+    #     'host': host,
+    #     'port': port,
+    #     'debug': True,
+    # }
+    # app.run(**args)
+    app.run(debug=True)
